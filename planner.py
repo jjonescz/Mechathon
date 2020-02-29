@@ -40,8 +40,8 @@ class Planner:
             self.left = True
             self.ignorations = [True, False]
         elif self.state == "BR":
-            self.left = True
-            self.ignorations = [True]
+            self.left = False
+            self.ignorations = [True, True, True]
         elif self.state == "YR":
             self.left = False
             self.ignorations = [False, True, True]
