@@ -13,7 +13,7 @@ class LineFollower:
         self.rm = rm
 
         # Parameters
-        self.speed = 120  # deg/sec, [-1000, 1000]
+        self.speed = 90  # deg/sec, [-1000, 1000]
 
         # initial measurement
         self.target_value = 25  # self.cs.reflection()
@@ -58,7 +58,7 @@ class LineFollower:
 
     def isTurn(self):
         sum_us = sum(self.last_us)
-        treshold = 1500
+        treshold = 1200
         if sum_us > treshold:
             return "left"
         elif sum_us < -treshold:
