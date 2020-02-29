@@ -15,11 +15,12 @@ class LineFollower:
         self.speed = 90  # deg/sec, [-1000, 1000]
         self.dt = 100     # milliseconds
         self.stop_action = Stop.COAST
+        self.k = 20
 
         # PID tuning
         self.Kp = 1  # proportional gain
         self.Ki = 0  # integral gain
-        self.Kd = 0  # derivative gain
+        self.Kd = 0.5  # derivative gain
 
         self.integral = 0
         self.previous_error = 0
@@ -27,11 +28,13 @@ class LineFollower:
         # initial measurement
         self.target_value = self.cs.reflection()
 
+        print("Target:", self.target_value)
+
     def step(self, left=True):
         current_value = self.cs.reflection()
 
         # Calculate steering using PID algorithm
-        error = 7 * (self.target_value - current_value)
+        error = self.k * (self.target_value - current_value)
         self.integral += (error * self.dt)
         derivative = (error - self.previous_error) / self.dt
         self.previous_error = error
