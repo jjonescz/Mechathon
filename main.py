@@ -44,6 +44,6 @@ if __name__ == "__main__":
         p.plan(p.state[1] + b)
 
         # Turn around.
-        lf.turn(1 if p.left else - 1, not p.left)
+        lf.turn(1 if p.left else - 1, p.left)
 
     print("Finished")
