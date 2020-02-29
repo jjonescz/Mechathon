@@ -12,8 +12,8 @@ class LineFollower:
         self.rm = Motor(Port.D)
 
         # Parameters
-        self.speed = 360/4  # deg/sec, [-1000, 1000]
-        self.dt = 500      # milliseconds
+        self.speed = 90     # deg/sec, [-1000, 1000]
+        self.dt = 100       # milliseconds
         self.stop_action = Stop.COAST
 
         # PID tuning
@@ -28,12 +28,10 @@ class LineFollower:
         self.target_value = self.cs.reflection()
 
     def step(self):
-        """
-        Returns time to sleep in seconds.
-        """
+        current_value = self.cs.reflection()
 
         # Calculate steering using PID algorithm
-        error = self.target_value - self.cs.reflection()
+        error = 7 * (self.target_value - current_value)
         self.integral += (error * self.dt)
         derivative = (error - self.previous_error) / self.dt
         self.previous_error = error
@@ -45,6 +43,9 @@ class LineFollower:
         u = (self.Kp * error) + (self.Ki * self.integral) + \
             (self.Kd * derivative)
 
+        print("Current:", current_value, "Target:",
+              self.target_value, "Speed:", u, end=" ")
+
         # limit u to safe values: [-1000, 1000] deg/sec
         if self.speed + abs(u) > 1000:
             if u >= 0:
@@ -52,12 +53,9 @@ class LineFollower:
             else:
                 u = self.speed - 1000
 
+        print("Speed clipped:", u)
+
         # run motors
-        if u >= 0:
-            self.lm.run_time(self.speed + u, self.dt, self.stop_action)
-            self.rm.run_time(self.speed - u, self.dt, self.stop_action)
-            return self.dt / 1000
-        else:
-            self.lm.run_time(self.speed - u, self.dt, self.stop_action)
-            self.rm.run_time(self.speed + u, self.dt, self.stop_action)
-            return self.dt / 1000
+        self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
+        self.rm.run_time(self.speed + u, self.dt, self.stop_action, False)
+        sleep(self.dt / 1000)
