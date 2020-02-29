@@ -83,6 +83,10 @@ class LineFollower:
 
         # Don't ignore, just detect the turn.
         if not ignore:
+            print("Helping turn")
+            a = 100
+            self.lm.run_angle(360, -turn_dir * a, Stop.COAST, False)
+            self.rm.run_angle(360, turn_dir * a)
             self.completeTurn()
             return True
 

@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("SL")
+    p = Planner("LY")
 
     print("Started")
 
