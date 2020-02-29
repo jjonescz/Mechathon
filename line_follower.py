@@ -60,12 +60,13 @@ class LineFollower:
 
         # print("Speed clipped:", u)
 
-        self.last_us = self.last_us[1:]
-        self.last_us.append(u)
-        print("Sum of 10:", sum(self.last_us))
-
         if not left:
             u = -u
+
+        self.last_us = self.last_us[1:]
+        self.last_us.append(u)
+
+        # print("Sum of 10:", sum(self.last_us))
 
         # run motors
         self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
@@ -77,4 +78,13 @@ class LineFollower:
         """
         a = 300
         self.lm.run_angle(360, dir * a, Stop.COAST, False)
-        self.rm.run_angle(360, -1*dir*a)
+        self.rm.run_angle(360, -1 * dir * a)
+
+    def isTurn(self):
+        sum_us = sum(self.last_us)
+        treshold = 5000
+        if sum_us > treshold:
+            return "left"
+        elif sum_us < treshold:
+            return "right"
+        return None
