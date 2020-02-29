@@ -10,8 +10,8 @@ class Planner:
     D: depo
     """
 
-    def __init__(self):
-        self.plan("SL")
+    def __init__(self, start):
+        self.plan(start)
 
     def plan(self, target):
         self.state = target
@@ -75,3 +75,12 @@ class Planner:
         elif self.state == "OD":
             self.left = True
             self.ignorations = [True, False]
+
+    def ignoreNext(self):
+        if len(self.ignorations) == 0:
+            return False
+        return self.ignorations[0]
+
+    def popTurn(self):
+        if len(self.ignorations) > 0:
+            self.ignorations.pop(0)

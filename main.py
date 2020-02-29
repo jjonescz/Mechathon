@@ -3,6 +3,7 @@
 from dependencies import *
 from line_follower import LineFollower
 from brick_detector import BrickDetector
+from planner import Planner
 
 if __name__ == "__main__":
     print("Initializing")
@@ -21,25 +22,20 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     #bd = BrickDetector()
+    p = Planner("SL")
 
     print("Started")
 
-    while Button.DOWN not in brick.buttons():
-        if Button.LEFT in brick.buttons():
-            if not lf.left:
-                print("-> left")
-            lf.left = True
-        if Button.RIGHT in brick.buttons():
-            if left:
-                print("-> right")
-            lf.left = False
+    while True:
+        lf.left = p.left
 
-        # Follow line edge
+        # Follow line edge.
         lf.step()
 
-        lf.ignoreTurn()
+        # Ignore turns.
+        if lf.handleTurn(p.ignoreNext()):
+            p.popTurn()
 
         # bd.brickAhead()
-        pass
 
     print("Finished")

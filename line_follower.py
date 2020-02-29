@@ -91,7 +91,7 @@ class LineFollower:
             return "right"
         return None
 
-    def ignoreTurn(self):
+    def handleTurn(self, ignore):
         turn = self.isTurn()
         step_delay = 30
         if turn == "left" and self.left:
@@ -102,6 +102,10 @@ class LineFollower:
             turn_after = step_delay
         else:
             return False
+
+        # Don't ignore, just detect the turn.
+        if not ignore:
+            return True
 
         while turn_after > 0:
             self.step()
