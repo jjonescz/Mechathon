@@ -29,11 +29,11 @@ class BrickDetector:
         """
         Returns color of loaded brick or None.
         """
-        self.lm.reset_angle(0)
-        self.rm.reset_angle(0)
         # closer than 15 cm means brick ahead
         if self.us.distance() < 45:
             print("Brick detected")
+            self.lm.reset_angle(0)
+            self.rm.reset_angle(0)
             self.claws(1980)
             self.go(self.dist_to_brick - 20)
             if self.shouldPickUpBrick():

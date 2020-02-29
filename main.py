@@ -28,17 +28,17 @@ if __name__ == "__main__":
         # Follow line edge.
         lf.step()
 
-        # # Ignore turns.
+        # Ignore turns.
         if lf.handleTurn(p.ignoreNext()):
             p.popTurn()
 
         # Detect bricks.
-        target = bd.brickAhead()
-        if target is None:
+        b = bd.brickAhead()
+        if b is None:
             continue
 
         # Plan destination.
-        p.plan(p.state[1] + target)
+        p.plan(p.state[1] + b)
 
         # Turn around.
         lf.turn(1 if lf.left else -1)
