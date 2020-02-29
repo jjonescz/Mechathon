@@ -28,6 +28,8 @@ class LineFollower:
         # initial measurement
         self.target_value = 25  # self.cs.reflection()
 
+        self.last_us = [0] * 10
+
         print("Target:", self.target_value)
 
     def step(self, left=True):
@@ -58,9 +60,21 @@ class LineFollower:
 
         # print("Speed clipped:", u)
 
+        self.last_us = self.last_us[1:]
+        self.last_us.append(u)
+        print("Sum of 10:", sum(self.last_us))
+
         if not left:
             u = -u
 
         # run motors
         self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
         self.rm.run_time(self.speed + u, self.dt, self.stop_action)
+
+    def turn(self, dir=1):
+        """
+        Turns robot 350 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
+        """
+        a = 300
+        self.lm.run_angle(360, dir * a, Stop.COAST, False)
+        self.rm.run_angle(360, -1*dir*a)

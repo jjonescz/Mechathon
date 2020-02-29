@@ -31,12 +31,14 @@ if __name__ == "__main__":
             if not left:
                 print("-> left")
             left = True
+            lf.turn(-1)
         if Button.RIGHT in brick.buttons():
             if left:
                 print("-> right")
             left = False
+            lf.turn(1)
 
-        lf.step(left)
+        # lf.step(left)
         # bd.brickAhead()
         pass
 
