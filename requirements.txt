@@ -10,3 +10,4 @@ python-ev3dev==1.2.0
 python-ev3dev2==2.0.0
 requests==2.23.0
 urllib3==1.25.8
+simple-pid==0.2.4

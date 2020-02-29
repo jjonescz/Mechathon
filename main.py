@@ -28,12 +28,12 @@ if __name__ == "__main__":
         # Follow line edge.
         lf.step()
 
-        # Ignore turns.
-        # if lf.handleTurn(p.ignoreNext()):
-        #     p.popTurn()
+        # # Ignore turns.
+        if lf.handleTurn(p.ignoreNext()):
+            p.popTurn()
 
         # Detect bricks.
-        if bd.brickAhead():
-            break
+        # if bd.brickAhead():
+         #   break
 
     print("Finished")

@@ -1,4 +1,5 @@
 from dependencies import *
+from simple_pid import PID
 
 
 class LineFollower:
@@ -12,22 +13,20 @@ class LineFollower:
         self.rm = rm
 
         # Parameters
-        self.speed = 360  # deg/sec, [-1000, 1000]
-        self.dt = 110     # milliseconds
-        self.stop_action = Stop.COAST
-        self.k = 80
-
-        # PID tuning
-        self.Kp = 1  # proportional gain
-        self.Ki = 0  # integral gain
-        self.Kd = 0.5  # derivative gain
-
-        self.integral = 0
-        self.previous_error = 0
+        self.speed = 120  # deg/sec, [-1000, 1000]
 
         # initial measurement
         self.target_value = 25  # self.cs.reflection()
 
+        # PID tuning
+        self.Kp = 8  # proportional gain
+        self.Ki = 0.005  # integral gain
+        self.Kd = 0.1  # derivative gain
+        self.pid = PID(self.Kp, self.Ki, self.Kd,
+                       setpoint=self.target_value)
+        self.pid.output_limits = (-1000, 1000)
+
+        # Turn detection
         self.last_us = [0] * 10
 
         self.left = True
@@ -35,44 +34,18 @@ class LineFollower:
         print("Target:", self.target_value)
 
     def step(self):
-        current_value = self.cs.reflection()
-
-        # Calculate steering using PID algorithm
-        error = self.k * (self.target_value - current_value)
-        self.integral += (error * self.dt)
-        derivative = (error - self.previous_error) / self.dt
-        self.previous_error = error
-
-        # u zero:     on target,  drive forward
-        # u positive: too bright, turn right
-        # u negative: too dark,   turn left
-
-        u = (self.Kp * error) + (self.Ki * self.integral) + \
-            (self.Kd * derivative)
-
-        # print("Current:", current_value, "Target:",
-        #       self.target_value, "Speed:", u, end=" ")
-
-        # limit u to safe values: [-1000, 1000] deg/sec
-        if self.speed + abs(u) > 1000:
-            if u >= 0:
-                u = 1000 - self.speed
-            else:
-                u = self.speed - 1000
-
-        # print("Speed clipped:", u)
-
+        u = self.pid(self.cs.reflection())
         if not self.left:
             u = -u
 
         self.last_us = self.last_us[1:]
         self.last_us.append(u)
 
-        # print("Sum of 10:", sum(self.last_us))
+        # print("u:", u)
 
         # run motors
-        self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
-        self.rm.run_time(self.speed + u, self.dt, self.stop_action)
+        self.lm.run(self.speed - u)
+        self.rm.run(self.speed + u)
 
     def turn(self, dir=1):
         """
@@ -84,7 +57,7 @@ class LineFollower:
 
     def isTurn(self):
         sum_us = sum(self.last_us)
-        treshold = 5000
+        treshold = 1500
         if sum_us > treshold:
             return "left"
         elif sum_us < -treshold:
