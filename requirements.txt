@@ -1,1 +1,12 @@
+autopep8==1.5
+certifi==2019.11.28
+chardet==3.0.4
+idna==2.9
+Pillow==7.0.0
+pybricks==0.0.5
 pybricks-stubs==0.0.6
+pycodestyle==2.5.0
+python-ev3dev==1.2.0
+python-ev3dev2==2.0.0
+requests==2.23.0
+urllib3==1.25.8
