@@ -24,8 +24,19 @@ if __name__ == "__main__":
 
     print("Started")
 
+    left = True
+
     while Button.DOWN not in brick.buttons():
-        lf.step()
+        if Button.LEFT in brick.buttons():
+            if not left:
+                print("-> left")
+            left = True
+        if Button.RIGHT in brick.buttons():
+            if left:
+                print("-> right")
+            left = False
+
+        lf.step(left)
         # bd.brickAhead()
         pass
 
