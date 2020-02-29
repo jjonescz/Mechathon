@@ -85,6 +85,6 @@ class LineFollower:
         treshold = 5000
         if sum_us > treshold:
             return "left"
-        elif sum_us < treshold:
+        elif sum_us < -treshold:
             return "right"
         return None
