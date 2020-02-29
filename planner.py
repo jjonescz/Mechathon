@@ -16,8 +16,8 @@ class Planner:
     def plan(self, target):
         self.state = target
         if self.state == "SL":
-            self.left = True
-            self.ignorations = [False, False]
+            self.left = False
+            self.ignorations = [True]
         elif self.state == "SR":
             self.left = False
             self.ignorations = [False, False]
