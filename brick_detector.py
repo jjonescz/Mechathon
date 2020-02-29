@@ -6,6 +6,7 @@ class BrickDetector:
     def __init__(self):
         self.color = None
         self.motor = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+        self.motor.reset_angle(0)
         self.left_wheel = Motor(Port.B, Direction.COUNTERCLOCKWISE)
         self.right_wheel = Motor(Port.D, Direction.COUNTERCLOCKWISE)
 
@@ -22,10 +23,10 @@ class BrickDetector:
         # closer than 3 cm means brick below
         if self.us.distance() < 150:
             print("Brick detected")
-            self.motor.run_angle(360, 1890)
+            self.motor.run_angle(360, 1980 - self.motor.angle())
             print("*brick loaded*")
             # TODO: Return back.
-            self.motor.run_angle(360, -1890)
+            self.motor.run_angle(360, -self.motor.angle())
             if self.shouldPickUpBrick():
                 self.loadBrick()
                 return True
