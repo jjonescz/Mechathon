@@ -84,3 +84,5 @@ class Planner:
     def popTurn(self):
         if len(self.ignorations) > 0:
             self.ignorations.pop(0)
+        else:
+            print("Popped nonexistent turn!")

@@ -91,10 +91,10 @@ class LineFollower:
             if turn_after == 0:
                 self.turn(turn_dir, self.left)
 
-        step_after_turn = 30
-        while step_after_turn > 0:
+        # Complete the turn.
+        time_to_complete = time() + 2
+        while time() < time_to_complete:
             self.step()
-            step_after_turn -= 1
 
         print("done")
 
