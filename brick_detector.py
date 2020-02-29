@@ -62,13 +62,16 @@ class BrickDetector:
         (r, g, b) = self.color.rgb()
 
         print("Found color:", r, g, b)
-        offset = 0
-        # if col == Color.BLUE:
-        #     offset = 0
-        # elif col == Color.RED:
-        #     offset = 2
-        # elif col == Color.YELLOW:
-        #     offset = 4
+
+        if r == 0 or b/r > 3:
+            offset = 0  # blue
+            print("blue")
+        elif g == 0 or r/g > 3:
+            offset = 2  # red
+            print("red")
+        else:
+            offset = 4  # yellow
+            print("yellow")
 
         if self.collected[offset] == False:
             self.collected[offset] = True
