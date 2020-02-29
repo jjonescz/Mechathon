@@ -15,10 +15,9 @@ if __name__ == "__main__":
     #         d = Direction.COUNTERCLOCKWISE
     #     if Button.CENTER in brick.buttons():
     #         d = None
-    #     print("Dir:", d)
     #     if d is not None:
     #         motor = Motor(Port.A, d)
-    #         motor.run_angle(90, 180)
+    #         motor.run_angle(360, 180)
 
     lf = LineFollower()
     #bd = BrickDetector()
