@@ -105,6 +105,11 @@ class LineFollower:
 
         while turn_after > 0:
             self.step()
-            turn_after = turn_after - 1
+            turn_after -= 1
             if turn_after == 0:
                 self.turn(turn_dir)
+
+        step_after_turn = 30
+        while step_after_turn > 0:
+            self.step()
+            step_after_turn -= 1
