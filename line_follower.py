@@ -8,12 +8,12 @@ class LineFollower:
         self.cs = ColorSensor(Port.S3)
 
         # Motors
-        self.lm = Motor(Port.A)
+        self.lm = Motor(Port.B)
         self.rm = Motor(Port.D)
 
         # Parameters
         self.speed = 360  # deg/sec, [-1000, 1000]
-        self.dt = 100     # milliseconds
+        self.dt = 150     # milliseconds
         self.stop_action = Stop.COAST
         self.k = 80
 
@@ -63,5 +63,4 @@ class LineFollower:
 
         # run motors
         self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
-        self.rm.run_time(self.speed + u, self.dt, self.stop_action, False)
-        sleep(self.dt / 1000)
+        self.rm.run_time(self.speed + u, self.dt, self.stop_action)
