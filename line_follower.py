@@ -1,15 +1,4 @@
-# line_follower.py
-# by: Carl Strömberg
-
-# Import the EV3-robot library
-from pybricks import ev3brick as brick
-from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
-                                 InfraredSensor, UltrasonicSensor, GyroSensor)
-from pybricks.parameters import (Port, Stop, Direction, Button, Color,
-                                 SoundFile, ImageFile, Align)
-from pybricks.tools import print, wait, StopWatch
-from pybricks.robotics import DriveBase
-from time import sleep
+import dependencies
 
 
 class LineFollower:
@@ -22,17 +11,12 @@ class LineFollower:
 
         # sensors
         cs = ColorSensor(Port.S4)
-        # assert cs.connected  # measures light intensity
-
-        # cs.mode = 'COL-REFLECT'  # measure light intensity
 
         # motors
         lm = Motor(Port.A)
-        # assert lm.connected  # left motor
         rm = Motor(Port.D)
-        # assert rm.connected  # right motor
 
-        speed = 360/4  # deg/sec, [-1000, 1000]
+        speed = 1000  # deg/sec, [-1000, 1000]
         dt = 500       # milliseconds
         stop_action = Stop.COAST
 
@@ -44,7 +28,7 @@ class LineFollower:
         integral = 0
         previous_error = 0
 
-        # initial measurment
+        # initial measurement
         target_value = cs.reflection()
 
         # Start the main loop
