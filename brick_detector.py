@@ -20,7 +20,7 @@ class BrickDetector:
         Returns True if brick was loaded on robot, else False
         """
         # closer than 3 cm means brick below
-        if self.us.distance < 30:
+        if self.us.distance() < 30:
             self.motor.run_angle(90, 90)
             if self.shouldPickUpBrick():
                 self.loadBrick()
@@ -33,7 +33,7 @@ class BrickDetector:
 
 
     def shouldPickUpBrick(self):
-        col = color.color()
+        col = self.color.color()
         offset = -1
         if col == Color.BLUE:
             offset = 0
