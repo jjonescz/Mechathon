@@ -17,46 +17,27 @@ if __name__ == "__main__":
     #         d = None
     #     if d is not None:
     #         motor = Motor(Port.A, d)
-    #         motor.run_angle(360, 180)
+    #         motor.run_angle(360, 90)
 
     lf = LineFollower()
     #bd = BrickDetector()
 
     print("Started")
 
-    turn_dir = 0
-    turn_after = 0
-    left = True
-
     while Button.DOWN not in brick.buttons():
         if Button.LEFT in brick.buttons():
-            if not left:
+            if not lf.left:
                 print("-> left")
-            left = True
-            # lf.turn(-1)
+            lf.left = True
         if Button.RIGHT in brick.buttons():
             if left:
                 print("-> right")
-            left = False
-            # lf.turn(1)
+            lf.left = False
 
         # Follow line edge
-        lf.step(left)
+        lf.step()
 
-        # Ignore turns
-        turn = lf.isTurn()
-        step_delay = 30
-        if turn == "left":
-            turn_dir = 1
-            turn_after = step_delay
-        elif turn == "right":
-            turn_dir = -1
-            turn_after = step_delay
-
-        if turn_after > 0:
-            turn_after = turn_after - 1
-            if turn_after == 0:
-                lf.turn(turn_dir)
+        lf.ignoreTurn()
 
         # bd.brickAhead()
         pass

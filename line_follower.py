@@ -30,9 +30,11 @@ class LineFollower:
 
         self.last_us = [0] * 10
 
+        self.left = True
+
         print("Target:", self.target_value)
 
-    def step(self, left=True):
+    def step(self):
         current_value = self.cs.reflection()
 
         # Calculate steering using PID algorithm
@@ -60,7 +62,7 @@ class LineFollower:
 
         # print("Speed clipped:", u)
 
-        if not left:
+        if not self.left:
             u = -u
 
         self.last_us = self.last_us[1:]
@@ -88,3 +90,21 @@ class LineFollower:
         elif sum_us < -treshold:
             return "right"
         return None
+
+    def ignoreTurn(self):
+        turn = self.isTurn()
+        step_delay = 30
+        if turn == "left":
+            turn_dir = 1
+            turn_after = step_delay
+        elif turn == "right":
+            turn_dir = -1
+            turn_after = step_delay
+        else:
+            return
+
+        while turn_after > 0:
+            self.step()
+            turn_after = turn_after - 1
+            if turn_after == 0:
+                self.turn(turn_dir)
