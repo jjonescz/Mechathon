@@ -52,7 +52,7 @@ class LineFollower:
         Turns robot 350 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
         """
         print("Turning:", dir)
-        a = 200
+        a = 220
         self.lm.run_angle(360, dir * a, Stop.COAST, False)
         self.rm.run_angle(360, -1 * dir * a)
 
@@ -67,7 +67,7 @@ class LineFollower:
 
     def handleTurn(self, ignore):
         turn = self.isTurn()
-        step_delay = 30
+        step_delay = 5
         if turn == "left" and self.left:
             turn_dir = 1
             turn_after = step_delay
