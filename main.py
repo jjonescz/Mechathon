@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
         # Ignore turns.
         if lf.handleTurn(p.ignoreNext()):
+            print("Popped...")
             p.popTurn()
 
         # Detect bricks.
@@ -43,6 +44,6 @@ if __name__ == "__main__":
         p.plan(p.state[1] + b)
 
         # Turn around.
-        lf.turn(1 if p.left else -1)
+        lf.turn(1 if p.left else - 1, not p.left)
 
     print("Finished")

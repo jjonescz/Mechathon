@@ -47,14 +47,14 @@ class LineFollower:
         self.lm.run(self.speed - u)
         self.rm.run(self.speed + u)
 
-    def turn(self, dir=1):
+    def turn(self, dir, target_left):
         """
         Turns robot 350 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
         """
-        print("Turning:", dir)
-        a = 220
+        print("Turning", dir, "from", self.left, "to", target_left)
+        a = 200
         self.lm.run_angle(360, dir * a, Stop.COAST, False)
-        self.rm.run_angle(360, -1 * dir * a)
+        self.rm.run_angle(360, -dir * a)
 
     def isTurn(self):
         sum_us = sum(self.last_us)
@@ -77,7 +77,7 @@ class LineFollower:
         else:
             return False
 
-        print("Turn detected:", turn_dir)
+        print("Turn detected:", turn)
 
         # Don't ignore, just detect the turn.
         if not ignore:
@@ -89,7 +89,7 @@ class LineFollower:
             self.step()
             turn_after -= 1
             if turn_after == 0:
-                self.turn(turn_dir)
+                self.turn(turn_dir, self.left)
 
         step_after_turn = 30
         while step_after_turn > 0:
