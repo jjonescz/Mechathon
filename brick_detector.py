@@ -66,7 +66,7 @@ class BrickDetector:
             self.result = "B"
         elif g == 0 or r/g > 3:
             offset = 2  # red
-            self.result = "R"
+            self.result = "O"
         else:
             offset = 4  # yellow
             self.result = "Y"
