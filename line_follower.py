@@ -13,7 +13,7 @@ class LineFollower:
 
         # Parameters
         self.speed = 360  # deg/sec, [-1000, 1000]
-        self.dt = 150     # milliseconds
+        self.dt = 110     # milliseconds
         self.stop_action = Stop.COAST
         self.k = 80
 
@@ -26,7 +26,7 @@ class LineFollower:
         self.previous_error = 0
 
         # initial measurement
-        self.target_value = self.cs.reflection()
+        self.target_value = 25  # self.cs.reflection()
 
         print("Target:", self.target_value)
 

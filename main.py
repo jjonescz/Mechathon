@@ -7,13 +7,18 @@ from brick_detector import BrickDetector
 if __name__ == "__main__":
     print("Initializing")
 
+    # d = None
     # while True:
     #     if Button.LEFT in brick.buttons():
     #         d = Direction.CLOCKWISE
     #     if Button.RIGHT in brick.buttons():
     #         d = Direction.COUNTERCLOCKWISE
-    #     motor = Motor(Port.A, Direction.CLOCKWISE)
-    #     motor.run_angle(360, 180)
+    #     if Button.CENTER in brick.buttons():
+    #         d = None
+    #     print("Dir:", d)
+    #     if d is not None:
+    #         motor = Motor(Port.A, d)
+    #         motor.run_angle(90, 180)
 
     lf = LineFollower()
     #bd = BrickDetector()
@@ -23,5 +28,6 @@ if __name__ == "__main__":
     while Button.DOWN not in brick.buttons():
         lf.step()
         # bd.brickAhead()
+        pass
 
     print("Finished")
