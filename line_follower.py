@@ -94,14 +94,14 @@ class LineFollower:
     def ignoreTurn(self):
         turn = self.isTurn()
         step_delay = 30
-        if turn == "left":
+        if turn == "left" and self.left:
             turn_dir = 1
             turn_after = step_delay
-        elif turn == "right":
+        elif turn == "right" and not self.left:
             turn_dir = -1
             turn_after = step_delay
         else:
-            return
+            return False
 
         while turn_after > 0:
             self.step()
@@ -113,3 +113,5 @@ class LineFollower:
         while step_after_turn > 0:
             self.step()
             step_after_turn -= 1
+
+        return True
