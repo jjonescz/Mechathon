@@ -12,10 +12,10 @@ class LineFollower:
         self.rm = Motor(Port.D)
 
         # Parameters
-        self.speed = 90  # deg/sec, [-1000, 1000]
+        self.speed = 360  # deg/sec, [-1000, 1000]
         self.dt = 100     # milliseconds
         self.stop_action = Stop.COAST
-        self.k = 20
+        self.k = 80
 
         # PID tuning
         self.Kp = 1  # proportional gain
