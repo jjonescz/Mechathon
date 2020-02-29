@@ -76,7 +76,7 @@ class LineFollower:
         """
         Turns robot 350 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
         """
-        a = 300
+        a = 200
         self.lm.run_angle(360, dir * a, Stop.COAST, False)
         self.rm.run_angle(360, -1 * dir * a)
 

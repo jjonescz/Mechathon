@@ -24,6 +24,8 @@ if __name__ == "__main__":
 
     print("Started")
 
+    turn_dir = 0
+    turn_after = 0
     left = True
 
     while Button.DOWN not in brick.buttons():
@@ -43,12 +45,18 @@ if __name__ == "__main__":
 
         # Ignore turns
         turn = lf.isTurn()
+        step_delay = 30
         if turn == "left":
-            lf.turn(1)
-            left = not left
+            turn_dir = 1
+            turn_after = step_delay
         elif turn == "right":
-            lf.turn(-1)
-            left = not left
+            turn_dir = -1
+            turn_after = step_delay
+
+        if turn_after > 0:
+            turn_after = turn_after - 1
+            if turn_after == 0:
+                lf.turn(turn_dir)
 
         # bd.brickAhead()
         pass
