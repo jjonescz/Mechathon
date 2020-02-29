@@ -10,7 +10,7 @@ class BrickDetector:
         self.lm = lm
         self.rm = rm
 
-        self.color = ColorSensor(Port.S4)
+        self.color = cs
         self.us = UltrasonicSensor(Port.S2)
 
         self.dist_to_brick = 60
@@ -22,8 +22,8 @@ class BrickDetector:
         self.motor.run_angle(720, target - self.motor.angle())
 
     def go(self, target):
-        self.lm.run_angle(360, target - self.lm.angle(), Stop.COAST, False)
-        self.rm.run_angle(360, target - self.rm.angle())
+        self.lm.run_angle(180, target - self.lm.angle(), Stop.COAST, False)
+        self.rm.run_angle(180, target - self.rm.angle())
 
     def brickAhead(self):
         """
@@ -57,16 +57,18 @@ class BrickDetector:
         self.claws(0)
 
     def shouldPickUpBrick(self):
+        (r, g, b) = self.color.rgb()
         sleep(1)
-        col = self.color.color()
-        print("Found color:", repr(col))
-        offset = -1
-        if col == Color.BLUE:
-            offset = 0
-        elif col == Color.RED:
-            offset = 2
-        elif col == Color.YELLOW:
-            offset = 4
+        (r, g, b) = self.color.rgb()
+
+        print("Found color:", r, g, b)
+        offset = 0
+        # if col == Color.BLUE:
+        #     offset = 0
+        # elif col == Color.RED:
+        #     offset = 2
+        # elif col == Color.YELLOW:
+        #     offset = 4
 
         if self.collected[offset] == False:
             self.collected[offset] = True

@@ -5,7 +5,7 @@ class LineFollower:
 
     def __init__(self):
         # Sensors
-        self.cs = ColorSensor(Port.S4)
+        self.cs = cs
 
         # Motors
         self.lm = lm

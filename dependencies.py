@@ -11,3 +11,4 @@ from time import sleep
 
 lm = Motor(Port.B)
 rm = Motor(Port.D)
+cs = ColorSensor(Port.S4)
