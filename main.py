@@ -33,6 +33,8 @@ if __name__ == "__main__":
             p.popTurn()
 
         # Detect bricks.
+        if p.state[1] not in ["D", "L", "R"]:
+            continue
         b = bd.brickAhead()
         if b is None:
             continue
