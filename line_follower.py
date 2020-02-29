@@ -12,8 +12,8 @@ class LineFollower:
         self.rm = Motor(Port.D)
 
         # Parameters
-        self.speed = 90     # deg/sec, [-1000, 1000]
-        self.dt = 100       # milliseconds
+        self.speed = 90  # deg/sec, [-1000, 1000]
+        self.dt = 100     # milliseconds
         self.stop_action = Stop.COAST
 
         # PID tuning
@@ -27,7 +27,7 @@ class LineFollower:
         # initial measurement
         self.target_value = self.cs.reflection()
 
-    def step(self):
+    def step(self, left=True):
         current_value = self.cs.reflection()
 
         # Calculate steering using PID algorithm
@@ -43,8 +43,8 @@ class LineFollower:
         u = (self.Kp * error) + (self.Ki * self.integral) + \
             (self.Kd * derivative)
 
-        print("Current:", current_value, "Target:",
-              self.target_value, "Speed:", u, end=" ")
+        # print("Current:", current_value, "Target:",
+        #       self.target_value, "Speed:", u, end=" ")
 
         # limit u to safe values: [-1000, 1000] deg/sec
         if self.speed + abs(u) > 1000:
@@ -53,7 +53,10 @@ class LineFollower:
             else:
                 u = self.speed - 1000
 
-        print("Speed clipped:", u)
+        # print("Speed clipped:", u)
+
+        if not left:
+            u = -u
 
         # run motors
         self.lm.run_time(self.speed - u, self.dt, self.stop_action, False)
