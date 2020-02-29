@@ -9,12 +9,10 @@ class BrickDetector:
         self.color = ColorSensor(Port.S3)
         self.touch = TouchSensor(Port.S4)
         #self.ir = InfraredSensor(Port.S2)
-      
 
     def brickAhead(self):
-        if touch.pressed():
-            motor.run_angle(10, 90)
-
+        if self.touch.pressed():
+            self.motor.run_angle(10, 90)
 
     def brickCollected(self):
-        motor.reset_angle(0)
+        self.motor.reset_angle(0)

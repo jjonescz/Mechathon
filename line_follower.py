@@ -5,14 +5,14 @@ class LineFollower:
 
     def __init__(self):
         # Sensors
-        self.cs = ColorSensor(Port.S4)
+        self.cs = ColorSensor(Port.S3)
 
         # Motors
         self.lm = Motor(Port.A)
         self.rm = Motor(Port.D)
 
         # Parameters
-        self.speed = 1000  # deg/sec, [-1000, 1000]
+        self.speed = 360/4  # deg/sec, [-1000, 1000]
         self.dt = 500      # milliseconds
         self.stop_action = Stop.COAST
 
