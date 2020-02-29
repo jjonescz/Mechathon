@@ -8,8 +8,8 @@ class LineFollower:
         self.cs = ColorSensor(Port.S4)
 
         # Motors
-        self.lm = Motor(Port.B)
-        self.rm = Motor(Port.D)
+        self.lm = lm
+        self.rm = rm
 
         # Parameters
         self.speed = 360  # deg/sec, [-1000, 1000]

@@ -7,37 +7,53 @@ class BrickDetector:
         self.color = None
         self.motor = Motor(Port.A, Direction.COUNTERCLOCKWISE)
         self.motor.reset_angle(0)
-        self.left_wheel = Motor(Port.B, Direction.COUNTERCLOCKWISE)
-        self.right_wheel = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+        self.lm = lm
+        self.rm = rm
 
         self.color = ColorSensor(Port.S4)
         self.us = UltrasonicSensor(Port.S2)
 
         # bricks to collect [B,B,R,R,Y,Y]
-        self.collected = [False]*6
+        self.collected = [False] * 6
+
+    def claws(self, target):
+        self.motor.run_angle(360, target - self.motor.angle())
+
+    def go(self, target):
+        self.lm.run_angle(360, target - self.lm.angle(), Stop.COAST, False)
+        self.rm.run_angle(360, target - self.rm.angle())
 
     def brickAhead(self):
         """
         Returns True if brick was loaded on robot, else False
         """
-        # closer than 3 cm means brick below
-        if self.us.distance() < 150:
+        self.lm.reset_angle(0)
+        self.rm.reset_angle(0)
+        # closer than 15 cm means brick ahead
+        if self.us.distance() < 45:
             print("Brick detected")
-            self.motor.run_angle(360, 1980 - self.motor.angle())
-            print("*brick loaded*")
-            # TODO: Return back.
-            self.motor.run_angle(360, -self.motor.angle())
+            self.claws(1980)
+            self.go(60)
             if self.shouldPickUpBrick():
                 self.loadBrick()
+                print("Loaded")
                 return True
             else:
-                return False
+                self.ignoreBrick()
+                print("Ignored")
+                return True
 
     def loadBrick(self):
-        self.motor.run_angle(90, 90)
+        self.claws(0)
+        self.go(0)
+
+    def ignoreBrick(self):
+        self.go(0)
+        self.claws(0)
 
     def shouldPickUpBrick(self):
         col = self.color.color()
+        print("Found color:", col)
         offset = -1
         if col == Color.BLUE:
             offset = 0

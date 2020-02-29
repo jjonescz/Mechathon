@@ -26,13 +26,14 @@ if __name__ == "__main__":
             motor.run_angle(360, 90)
 
         # Follow line edge.
-        # lf.step()
+        lf.step()
 
         # Ignore turns.
         # if lf.handleTurn(p.ignoreNext()):
         #     p.popTurn()
 
         # Detect bricks.
-        bd.brickAhead()
+        if bd.brickAhead():
+            break
 
     print("Finished")

@@ -7,3 +7,7 @@ from pybricks.parameters import (Port, Stop, Direction, Button, Color,
 from pybricks.tools import print, wait, StopWatch
 from pybricks.robotics import DriveBase
 from time import sleep
+
+
+lm = Motor(Port.B)
+rm = Motor(Port.D)
