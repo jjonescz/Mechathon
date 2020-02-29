@@ -103,9 +103,13 @@ class LineFollower:
         else:
             return False
 
+        print("Turn detected:", turn_dir)
+
         # Don't ignore, just detect the turn.
         if not ignore:
             return True
+
+        print("Ignoring...", end=" ")
 
         while turn_after > 0:
             self.step()
@@ -117,5 +121,7 @@ class LineFollower:
         while step_after_turn > 0:
             self.step()
             step_after_turn -= 1
+
+        print("done")
 
         return True
