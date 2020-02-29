@@ -81,6 +81,7 @@ class LineFollower:
 
         # Don't ignore, just detect the turn.
         if not ignore:
+            self.completeTurn()
             return True
 
         print("Ignoring...", end=" ")
@@ -92,10 +93,14 @@ class LineFollower:
                 self.turn(turn_dir, self.left)
 
         # Complete the turn.
-        time_to_complete = time() + 2
-        while time() < time_to_complete:
-            self.step()
+        self.completeTurn()
 
         print("done")
 
         return True
+
+    def completeTurn(self):
+        time_to_complete = time() + 3
+        while time() < time_to_complete:
+            self.step()
+        print("completed")
