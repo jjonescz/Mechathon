@@ -3,5 +3,6 @@
 	"files.eol": "\n",
 	"debug.openDebug": "neverOpen",
 	"python.linting.enabled": false,
-	"python.pythonPath": ".venv\\Scripts\\python.exe"
+	"python.pythonPath": ".venv\\Scripts\\python.exe",
+	"ev3devBrowser.download.directory": "."
 }
