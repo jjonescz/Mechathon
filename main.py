@@ -8,20 +8,8 @@ from planner import Planner
 if __name__ == "__main__":
     print("Initializing")
 
-    # d = None
-    # while True:
-    #     if Button.LEFT in brick.buttons():
-    #         d = Direction.CLOCKWISE
-    #     if Button.RIGHT in brick.buttons():
-    #         d = Direction.COUNTERCLOCKWISE
-    #     if Button.CENTER in brick.buttons():
-    #         d = None
-    #     if d is not None:
-    #         motor = Motor(Port.A, d)
-    #         motor.run_angle(360, 90)
-
     lf = LineFollower()
-    #bd = BrickDetector()
+    bd = BrickDetector()
     p = Planner("SL")
 
     print("Started")
@@ -29,13 +17,22 @@ if __name__ == "__main__":
     while True:
         lf.left = p.left
 
+        # Manual control.
+        if Button.LEFT in brick.buttons():
+            motor = Motor(Port.A, Direction.CLOCKWISE)
+            motor.run_angle(360, 90)
+        if Button.RIGHT in brick.buttons():
+            motor = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+            motor.run_angle(360, 90)
+
         # Follow line edge.
-        lf.step()
+        # lf.step()
 
         # Ignore turns.
-        if lf.handleTurn(p.ignoreNext()):
-            p.popTurn()
+        # if lf.handleTurn(p.ignoreNext()):
+        #     p.popTurn()
 
-        # bd.brickAhead()
+        # Detect bricks.
+        bd.brickAhead()
 
     print("Finished")
