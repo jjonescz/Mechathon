@@ -27,7 +27,7 @@ class BrickDetector:
 
     def brickAhead(self):
         """
-        Returns True if brick was loaded on robot, else False
+        Returns color of loaded brick or None.
         """
         self.lm.reset_angle(0)
         self.rm.reset_angle(0)
@@ -38,12 +38,12 @@ class BrickDetector:
             self.go(self.dist_to_brick - 20)
             if self.shouldPickUpBrick():
                 self.loadBrick()
-                print("Loaded")
-                return True
+                return self.result
             else:
                 self.ignoreBrick()
-                print("Ignored")
-                return True
+                return "D"
+
+        return None
 
     def loadBrick(self):
         self.go(0)
@@ -61,17 +61,17 @@ class BrickDetector:
         sleep(1)
         (r, g, b) = self.color.rgb()
 
-        print("Found color:", r, g, b)
-
         if r == 0 or b/r > 3:
             offset = 0  # blue
-            print("blue")
+            self.result = "B"
         elif g == 0 or r/g > 3:
             offset = 2  # red
-            print("red")
+            self.result = "R"
         else:
             offset = 4  # yellow
-            print("yellow")
+            self.result = "Y"
+
+        print("Found color:", r, g, b, self.result)
 
         if self.collected[offset] == False:
             self.collected[offset] = True

@@ -33,7 +33,14 @@ if __name__ == "__main__":
             p.popTurn()
 
         # Detect bricks.
-        # if bd.brickAhead():
-         #   break
+        target = bd.brickAhead()
+        if target is None:
+            continue
+
+        # Plan destination.
+        p.plan(p.state[1] + target)
+
+        # Turn around.
+        lf.turn(1 if lf.left else -1)
 
     print("Finished")
