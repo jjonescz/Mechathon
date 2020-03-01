@@ -25,6 +25,10 @@ class BrickDetector:
         self.lm.run_angle(180, target - self.lm.angle(), Stop.COAST, False)
         self.rm.run_angle(180, target - self.rm.angle())
 
+    def turn(self, target):
+        self.lm.run_angle(90, target - self.lm.angle(), Stop.COAST, False)
+        self.rm.run_angle(90, -target - self.rm.angle())
+
     def brickAhead(self):
         """
         Returns color of loaded brick or None.
@@ -80,3 +84,23 @@ class BrickDetector:
             self.collected[offset + 1] = True
             return True
         return False
+
+    def putDownBrick1(self):
+        # Turn left
+        self.lm.reset_angle(0)
+        self.rm.reset_angle(0)
+        self.turn(-40)
+
+        # Drop.
+        self.claws(1980)
+
+        # Turn right.
+        self.turn(0)
+
+        # Go back.
+        self.lm.reset_angle(0)
+        self.rm.reset_angle(0)
+        self.go(-120)
+
+        # Reset claws.
+        self.claws(0)
