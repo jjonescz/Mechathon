@@ -111,7 +111,7 @@ if __name__ == "__main__":
                 if p.left:
                     lf.turn(1, 200)
                 else:
-                    lf.turn(1, 250)
+                    lf.turn(-1, 300)
 
             # Turn around and go on.
             lf.left = p.left
