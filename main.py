@@ -75,6 +75,12 @@ if __name__ == "__main__":
                 bd.putDownBrick1()
             else:
                 bd.putDownBrick2()
-            break
+
+            # Turn around and go on.
+            lf.turn(-1, False)
+            p.plan(p.state[1] + "L")  # TODO: Or R/D
+            lf.left = p.left
+            last_mile = False
+            skip_one_turn = False
 
     print("Finished")
