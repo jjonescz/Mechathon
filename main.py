@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("SL")
+    p = Planner("BR")
     last_mile = False
     skip_one_turn = False
 
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         if p.state[1] in ["D", "L", "R"]:
             if bd.brickAhead():
                 # Plan destination.
-                print("Plan duration", time() - self.time())
+                print("Plan duration", time() - p.start_time)
                 p.plan(p.state[1] + bd.result)
 
                 # Turn around.
