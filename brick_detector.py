@@ -121,10 +121,18 @@ class BrickDetector:
         self.claws(0)
 
     def putDownBrick2(self):
+        # Blue target is detected too late. Compensate.
+        x = 0
+        if self.result == "B":
+            self.lm.reset_angle(0)
+            self.rm.reset_angle(0)
+            self.go(-40)
+            x = -15
+
         # Turn slightly right.
         self.lm.reset_angle(0)
         self.rm.reset_angle(0)
-        self.turn(15)
+        self.turn(15 + x)
 
         # Drop.
         self.claws(500)
