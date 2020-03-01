@@ -101,7 +101,7 @@ class LineFollower:
             self.step()
             turn_after -= 1
             if turn_after == 0:
-                self.turn(turn_dir, 120)
+                self.turn(turn_dir, 120 if turn_dir == 1 else 80)
 
         # Complete the turn.
         self.completeTurn()

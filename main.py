@@ -79,7 +79,7 @@ if __name__ == "__main__":
                 lf.turn(1, 250)
 
             # Turn around and go on.
-            print("Plan duration", time() - self.time())
+            print("Plan duration", time() - p.start_time)
             p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
             lf.completeTurn(2)
