@@ -35,44 +35,37 @@ if __name__ == "__main__":
         # Follow line edge.
         lf.step()
 
+        to_right = False
+
         # Depo arrival.
         if p.state[1] == "D" and len(p.ignorations) == 0:
             print("Depo arrival")
             dn.start()
-            dn.go(-2)
+            while True:
+                dn.search()
+                if bd.brickAhead():
+                    break
+            dn.exit()
+
+            # Go on.
+            p.plan("D" + bd.result)
+            lf.left = p.left
 
         # Detect bricks.
-        to_right = False
-        brick_picked_up = False
-        if p.state[1] in ["D", "L", "R"]:
+        elif p.state[1] in ["L", "R"]:
             if bd.brickAhead():
-                brick_picked_up = True
-
                 # Plan destination.
                 p.plan(p.state[1] + bd.result)
 
-                if not dn.visited:
-                    # Turn around.
-                    lf.turn(1 if p.left else - 1, 250)
+                # Turn around.
+                lf.turn(1 if p.left else - 1, 250)
 
-                    # Set side.
-                    lf.left = p.left
+                # Set side.
+                lf.left = p.left
 
         # Last mile detection.
         elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
             skip_one_turn = True
-
-        # Depo departure.
-        if dn.visited:
-            if brick_picked_up:
-                print("Depo departure")
-                dn.exit()
-
-                # Go on.
-                p.plan("D" + bd.result)
-                lf.left = p.left
-            else:
-                break
 
         # Ignore turns.
         no_more_ignorations = len(p.ignorations) == 0
