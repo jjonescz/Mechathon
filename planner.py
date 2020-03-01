@@ -12,9 +12,12 @@ class Planner:
 
     def __init__(self, start):
         self.plan(start)
+        self.start_time = 0
 
     def plan(self, target):
+        print("**Plan:", target)
         self.state = target
+        self.start_time = time()
         if self.state == "SL":
             self.left = False
             self.ignorations = [True]

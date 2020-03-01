@@ -38,6 +38,7 @@ if __name__ == "__main__":
         if p.state[1] in ["D", "L", "R"]:
             if bd.brickAhead():
                 # Plan destination.
+                print("Plan duration", time() - self.time())
                 p.plan(p.state[1] + bd.result)
 
                 # Turn around.
@@ -72,14 +73,16 @@ if __name__ == "__main__":
             print("Putting brick down")
             if bd.number == 1:
                 bd.putDownBrick1()
-                lf.turn(-1, 300)
+                lf.turn(-1, 320)
             else:
                 bd.putDownBrick2()
                 lf.turn(1, 250)
 
             # Turn around and go on.
+            print("Plan duration", time() - self.time())
             p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
+            lf.completeTurn(2)
             last_mile = False
             skip_one_turn = False
 
