@@ -37,9 +37,9 @@ if __name__ == "__main__":
 
         # Depo arrival.
         if p.state[1] == "D" and len(p.ignorations) == 0:
-            print("Depo")
+            print("Depo arrival")
             dn.start()
-            break
+            dn.go(-2)
 
         # Detect bricks.
         to_right = False
@@ -58,6 +58,12 @@ if __name__ == "__main__":
         # Last mile detection.
         elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
             skip_one_turn = True
+
+        # Depo departure.
+        if dn.visited:
+            dn.visited = False
+            print("Depo departure")
+            break
 
         # Ignore turns.
         no_more_ignorations = len(p.ignorations) == 0
