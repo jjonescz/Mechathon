@@ -15,10 +15,10 @@ class BrickDetector:
 
         self.dist_to_brick = 60
 
-        self.number = 1
+        self.number = 2
 
         # bricks to collect [B,B,R,R,Y,Y]
-        self.collected = [False] * 6
+        self.collected = [True, True, True, True] + [False] * 2
 
     def claws(self, target):
         self.motor.run_angle(720, target - self.motor.angle())
@@ -129,8 +129,8 @@ class BrickDetector:
 
     def nextTruck(self):
         c = sum(self.collected)
-        if c <= 2:
+        if c < 2:
             return "L"
-        if c <= 4:
+        if c < 4:
             return "R"
         return "D"

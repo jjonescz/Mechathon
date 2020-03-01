@@ -11,9 +11,9 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("BD")
+    p = Planner("DY")
     dn = DepoNavigator()
-    last_mile = False
+    last_mile = True
     skip_one_turn = False
 
     lf.left = p.left
@@ -88,15 +88,24 @@ if __name__ == "__main__":
         # Handle dropoff.
         if last_mile and lf.gradient_drop():
             print("Putting brick down")
+
+            # If going back by the left edge, turn the other way around.
+            p.plan(p.state[1] + bd.nextTruck())
+
             if bd.number == 1:
                 bd.putDownBrick1()
-                lf.turn(-1, 350)
+                if p.left:
+                    lf.turn(1, 250)
+                else:
+                    lf.turn(-1, 350)
             else:
                 bd.putDownBrick2()
-                lf.turn(1, 250)
+                if p.left:
+                    lf.turn(1, 200)
+                else:
+                    lf.turn(1, 250)
 
             # Turn around and go on.
-            p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
             lf.completeTurn()
             last_mile = False
