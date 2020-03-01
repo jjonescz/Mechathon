@@ -43,8 +43,11 @@ if __name__ == "__main__":
 
         # Detect bricks.
         to_right = False
+        brick_picked_up = False
         if p.state[1] in ["D", "L", "R"]:
             if bd.brickAhead():
+                brick_picked_up = True
+
                 # Plan destination.
                 print("Plan duration", time() - p.start_time)
                 p.plan(p.state[1] + bd.result)
@@ -62,9 +65,15 @@ if __name__ == "__main__":
 
         # Depo departure.
         if dn.visited:
-            dn.visited = False
-            print("Depo departure")
-            break
+            if brick_picked_up:
+                print("Depo departure")
+                dn.exit()
+
+                # Go on.
+                p.plan("D" + bd.result)
+                lf.left = p.left
+            else:
+                break
 
         # Ignore turns.
         no_more_ignorations = len(p.ignorations) == 0

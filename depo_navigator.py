@@ -35,3 +35,14 @@ class DepoNavigator:
         # Go towards brick.
         self.lm.run_angle(180, 10, Stop.COAST, False)
         self.rm.run_angle(180, 10)
+
+    def exit(self):
+        # Go back to line.
+        self.lm.run_angle(180, -200, Stop.COAST, False)
+        self.rm.run_angle(180, -200)
+
+        # Turn left.
+        self.lm.run_angle(180, -170, Stop.COAST, False)
+        self.rm.run_angle(180, 170)
+
+        self.visited = False
