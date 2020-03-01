@@ -49,7 +49,6 @@ if __name__ == "__main__":
                 brick_picked_up = True
 
                 # Plan destination.
-                print("Plan duration", time() - p.start_time)
                 p.plan(p.state[1] + bd.result)
 
                 if not dn.visited:
@@ -104,7 +103,6 @@ if __name__ == "__main__":
                 lf.turn(1, 250)
 
             # Turn around and go on.
-            print("Plan duration", time() - p.start_time)
             p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
             lf.completeTurn()
