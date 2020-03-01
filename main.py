@@ -80,13 +80,18 @@ if __name__ == "__main__":
                 print("Last mile for real")
                 skip_one_turn = False
                 last_mile = True
+                if bd.number == 2 and lf.left:
+                    lf.leftToRight()
                 lf.completeTurn()
 
         elif skip_one_turn and lf.isTurn() is not None:
             print("Last mile for real")
             skip_one_turn = False
             last_mile = True
-            lf.completeTurn(4)
+            lf.completeTurn(2)
+            if bd.number == 2 and lf.left:
+                lf.leftToRight()
+            lf.completeTurn(2)
 
         # Handle dropoff.
         if last_mile and lf.gradient_drop():

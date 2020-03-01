@@ -124,3 +124,8 @@ class LineFollower:
     def gradient_drop(self):
         g = self.gradient()
         return g < 0.9 or g > 1.5
+
+    def leftToRight(self):
+        print("Changing edge")
+        self.turn(1, 20)
+        self.left = False
