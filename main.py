@@ -61,12 +61,13 @@ if __name__ == "__main__":
                 print("Last mile for real")
                 skip_one_turn = False
                 last_mile = True
+                lf.completeTurn()
 
         elif skip_one_turn and lf.isTurn() is not None:
             print("Last mile for real")
             skip_one_turn = False
             last_mile = True
-            lf.completeTurn()
+            lf.completeTurn(4)
 
         # Handle dropoff.
         if last_mile and lf.gradient_drop():
@@ -82,7 +83,7 @@ if __name__ == "__main__":
             print("Plan duration", time() - p.start_time)
             p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
-            lf.completeTurn(2)
+            lf.completeTurn()
             last_mile = False
             skip_one_turn = False
 

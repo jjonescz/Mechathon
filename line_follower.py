@@ -110,7 +110,7 @@ class LineFollower:
 
         return True
 
-    def completeTurn(self, wait=4):
+    def completeTurn(self, wait=2):
         time_to_complete = time() + wait
         while time() < time_to_complete:
             self.step()
