@@ -12,3 +12,7 @@ from time import sleep, time
 lm = Motor(Port.B)
 rm = Motor(Port.D)
 cs = ColorSensor(Port.S4)
+
+
+def mean(a):
+    return sum(a) / len(a)

@@ -29,12 +29,20 @@ class LineFollower:
         # Turn detection
         self.last_us = [0] * 10
 
+        # Gradient detection
+        self.last_vals = []
+
         self.left = True
 
         print("Target:", self.target_value)
 
     def step(self):
-        u = self.pid(self.cs.reflection())
+        value = self.cs.reflection()
+        if len(self.last_vals) == 10:
+            self.last_vals = self.last_vals[1:]
+        self.last_vals.append(value)
+
+        u = self.pid(value)
         if not self.left:
             u = -u
 
@@ -110,3 +118,12 @@ class LineFollower:
         while time() < time_to_complete:
             self.step()
         print("completed")
+
+    def gradient(self):
+        if len(self.last_vals) < 10 or self.last_vals[-1] == 0:
+            return 1
+        return mean(self.last_vals[:-1]) / self.last_vals[-1]
+
+    def gradient_drop(self):
+        g = self.gradient()
+        return g < 0.9 or g > 1.5
