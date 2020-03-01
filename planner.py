@@ -82,6 +82,9 @@ class Planner:
         elif self.state == "OD":
             self.left = True
             self.ignorations = [True, False]
+        elif self.state[1] == "E":
+            self.left = True
+            self.ignorations = []
 
     def ignoreNext(self):
         if len(self.ignorations) == 0:

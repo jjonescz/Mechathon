@@ -133,4 +133,14 @@ class BrickDetector:
             return "L"
         if c < 4:
             return "R"
-        return "D"
+        if c < 6:
+            return "D"
+        return "E"
+
+    def finish(self):
+        self.lm.reset_angle(0)
+        self.rm.reset_angle(0)
+        self.go(0)
+        for i in range(27):
+            self.claws(500)
+            self.claws(0)

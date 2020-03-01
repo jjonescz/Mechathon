@@ -65,6 +65,11 @@ if __name__ == "__main__":
         elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
             skip_one_turn = True
 
+        # End.
+        elif p.state[1] == "E":
+            bd.finish()
+            break
+
         # Ignore turns.
         no_more_ignorations = len(p.ignorations) == 0
         if lf.handleTurn(p.ignoreNext()):
