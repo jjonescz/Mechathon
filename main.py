@@ -62,7 +62,9 @@ if __name__ == "__main__":
                 lf.left = p.left
 
         # Last mile detection.
-        elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
+        elif p.state[1] == "B" and len(p.ignorations) == 1 and not skip_one_turn:
+            skip_one_turn = True
+        elif p.state[1] in ["O", "Y"] and len(p.ignorations) == 0 and not skip_one_turn:
             skip_one_turn = True
 
         # End.
