@@ -18,3 +18,9 @@ pip install -r requirements.txt
 - [Jana Řežábková](https://github.com/janarez)
 - [Martin Vejbora](https://github.com/vejbomar)
 - [Adéla Čekalová](https://github.com/cekalovaadela)
+
+## Third-party libraries
+
+To avoid connecting our EV3 brick to the Internet and installing 3rd party
+libraries from there, we include library
+[simple_pid](https://pypi.org/project/simple-pid/) directly in the source code.
