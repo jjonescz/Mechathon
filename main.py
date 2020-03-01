@@ -59,6 +59,7 @@ if __name__ == "__main__":
             print("Last mile for real")
             skip_one_turn = False
             last_mile = True
+            lf.completeTurn()
 
         # Handle dropoff.
         if last_mile and lf.gradient_drop():

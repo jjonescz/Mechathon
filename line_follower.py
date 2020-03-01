@@ -68,7 +68,7 @@ class LineFollower:
 
     def isTurn(self):
         sum_us = sum(self.last_us)
-        treshold = 800
+        treshold = 700
         if sum_us > treshold:
             return "left"
         elif sum_us < -treshold:
