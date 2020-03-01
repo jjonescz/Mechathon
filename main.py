@@ -10,8 +10,8 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("SL")
-    last_mile = False
+    p = Planner("LO")
+    last_mile = True
     skip_one_turn = False
 
     lf.left = p.left
@@ -41,19 +41,18 @@ if __name__ == "__main__":
                 p.plan(p.state[1] + bd.result)
 
                 # Turn around.
-                lf.turn(1 if p.left else - 1, p.left)
+                lf.turn(1 if p.left else - 1, 250)
 
                 # Set side.
                 lf.left = p.left
 
         # Last mile detection.
         elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
-            to_right = bd.number == 2
             skip_one_turn = True
 
         # Ignore turns.
         no_more_ignorations = len(p.ignorations) == 0
-        if lf.handleTurn(p.ignoreNext(), to_right):
+        if lf.handleTurn(p.ignoreNext()):
             print("Popped...")
             p.popTurn()
 
@@ -73,11 +72,12 @@ if __name__ == "__main__":
             print("Putting brick down")
             if bd.number == 1:
                 bd.putDownBrick1()
+                lf.turn(-1, 300)
             else:
                 bd.putDownBrick2()
+                lf.turn(1, 250)
 
             # Turn around and go on.
-            lf.turn(-1, False)
             p.plan(p.state[1] + "L")  # TODO: Or R/D
             lf.left = p.left
             last_mile = False

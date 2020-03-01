@@ -111,10 +111,10 @@ class BrickDetector:
         self.claws(0)
 
     def putDownBrick2(self):
-        # Stop.
+        # Turn slightly right.
         self.lm.reset_angle(0)
         self.rm.reset_angle(0)
-        self.turn(0)
+        self.turn(20)
 
         # Drop.
         self.claws(500)

@@ -55,14 +55,11 @@ class LineFollower:
         self.lm.run(self.speed - u)
         self.rm.run(self.speed + u)
 
-    def turn(self, dir, target_left):
+    def turn(self, dir, a=120):
         """
-        Turns robot 350 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
+        Turns robot 360 degrees. Clockwise for dir=1, counterclockwise for dir=-1.
         """
-        print("Turning", dir, "from", self.left, "to", target_left)
-        a = 120
-        if self.left != target_left:
-            a = 250
+        print("Turning", dir, "a=", a)
         self.lm.run_angle(360, dir * a, Stop.COAST, False)
         self.rm.run_angle(360, -dir * a)
 
@@ -75,7 +72,7 @@ class LineFollower:
             return "right"
         return None
 
-    def handleTurn(self, ignore, to_right=False):
+    def handleTurn(self, ignore):
         turn = self.isTurn()
         step_delay = 5
         if turn == "left" and self.left:
@@ -91,30 +88,6 @@ class LineFollower:
 
         # Don't ignore, just detect the turn.
         if not ignore:
-            # Switch edges if necessary.
-            if to_right:
-                print("Switching edges")
-                self.left = False
-
-                # Reset PID.
-                self.pid = PID(self.Kp, self.Ki, self.Kd,
-                               setpoint=self.target_value)
-                self.pid.output_limits = (-1000, 1000)
-
-                # Go slightly forward.
-                print("Going forward")
-                self.lm.run_angle(360, 60, Stop.COAST, False)
-                self.rm.run_angle(360, 60)
-
-                # Turn left.
-                print("Turning left")
-                self.lm.run_angle(360, -100, Stop.COAST, False)
-                self.rm.run_angle(360, 100)
-
-                print("Completing turn")
-                self.completeTurn()
-                return True
-
             print("Helping turn")
             a = 100
             self.lm.run_angle(360, -turn_dir * a, Stop.COAST, False)
@@ -128,7 +101,7 @@ class LineFollower:
             self.step()
             turn_after -= 1
             if turn_after == 0:
-                self.turn(turn_dir, self.left)
+                self.turn(turn_dir, 120)
 
         # Complete the turn.
         self.completeTurn()
