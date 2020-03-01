@@ -68,14 +68,14 @@ class LineFollower:
 
     def isTurn(self):
         sum_us = sum(self.last_us)
-        treshold = 1200
+        treshold = 800
         if sum_us > treshold:
             return "left"
         elif sum_us < -treshold:
             return "right"
         return None
 
-    def handleTurn(self, ignore):
+    def handleTurn(self, ignore, to_right=False):
         turn = self.isTurn()
         step_delay = 5
         if turn == "left" and self.left:
@@ -91,6 +91,11 @@ class LineFollower:
 
         # Don't ignore, just detect the turn.
         if not ignore:
+            # Switch edges if necessary.
+            if to_right:
+                print("Switching edges")
+                self.left = True
+
             print("Helping turn")
             a = 100
             self.lm.run_angle(360, -turn_dir * a, Stop.COAST, False)

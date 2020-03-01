@@ -15,6 +15,8 @@ class BrickDetector:
 
         self.dist_to_brick = 60
 
+        self.number = 1
+
         # bricks to collect [B,B,R,R,Y,Y]
         self.collected = [False] * 6
 
@@ -31,7 +33,7 @@ class BrickDetector:
 
     def brickAhead(self):
         """
-        Returns color of loaded brick or None.
+        Returns True if any brick was detected.
         """
         # closer than 15 cm means brick ahead
         if self.us.distance() < 45:
@@ -42,12 +44,12 @@ class BrickDetector:
             self.go(self.dist_to_brick - 20)
             if self.shouldPickUpBrick():
                 self.loadBrick()
-                return self.result
+                return True
             else:
                 self.ignoreBrick()
-                return "D"
+                return True
 
-        return None
+        return False
 
     def loadBrick(self):
         self.go(0)
@@ -79,10 +81,13 @@ class BrickDetector:
 
         if self.collected[offset] == False:
             self.collected[offset] = True
+            self.number = 1
             return True
         elif self.collected[offset + 1] == False:
             self.collected[offset + 1] = True
+            self.number = 2
             return True
+        self.number = 2
         return False
 
     def putDownBrick1(self):

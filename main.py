@@ -10,7 +10,13 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("LY")
+    p = Planner("LO")
+    last_mile = False
+    skip_one_turn = False
+
+    # lf.left = p.left
+    # for i in range(1, 100):
+    #     lf.step()
 
     print("Started")
 
@@ -28,22 +34,39 @@ if __name__ == "__main__":
         # Follow line edge.
         lf.step()
 
+        # Detect bricks.
+        to_right = False
+        if p.state[1] in ["D", "L", "R"]:
+            if bd.brickAhead():
+                # Plan destination.
+                p.plan(p.state[1] + bd.result)
+
+                # Turn around.
+                lf.turn(1 if p.left else - 1, p.left)
+        # Last mile detection.
+        elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not last_mile:
+            to_right = bd.number == 2
+            skip_one_turn = p.state[1] != "B"
+            last_mile = not skip_one_turn
+            if last_mile:
+                print("Last mile")
+
         # Ignore turns.
-        if lf.handleTurn(p.ignoreNext()):
+        if lf.handleTurn(p.ignoreNext(), to_right):
             print("Popped...")
             p.popTurn()
+        elif skip_one_turn and lf.isTurn() is not None:
+            print("Last mile for real")
+            skip_one_turn = False
+            last_mile = True
 
-        # Detect bricks.
-        if p.state[1] not in ["D", "L", "R"]:
-            continue
-        b = bd.brickAhead()
-        if b is None:
-            continue
-
-        # Plan destination.
-        p.plan(p.state[1] + b)
-
-        # Turn around.
-        lf.turn(1 if p.left else - 1, p.left)
+        # Handle dropoff.
+        if last_mile and lf.gradient_drop():
+            print("Putting brick down")
+            if bd.number == 1:
+                bd.putDownBrick1()
+            else:
+                bd.putDownBrick2()
+            break
 
     print("Finished")
