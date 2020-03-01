@@ -36,7 +36,7 @@ class BrickDetector:
         Returns True if any brick was detected.
         """
         # closer than 15 cm means brick ahead
-        if self.us.distance() < 45:
+        if self.us.distance() < 50:
             print("Brick detected")
             self.lm.reset_angle(0)
             self.rm.reset_angle(0)
