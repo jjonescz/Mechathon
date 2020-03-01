@@ -10,18 +10,17 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("LO")
+    p = Planner("SL")
     last_mile = False
     skip_one_turn = False
 
-    # lf.left = p.left
+    lf.left = p.left
     # for i in range(1, 100):
     #     lf.step()
 
     print("Started")
 
     while True:
-        lf.left = p.left
 
         # Manual control.
         if Button.LEFT in brick.buttons():
@@ -43,18 +42,26 @@ if __name__ == "__main__":
 
                 # Turn around.
                 lf.turn(1 if p.left else - 1, p.left)
+
+                # Set side.
+                lf.left = p.left
+
         # Last mile detection.
-        elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not last_mile:
+        elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
             to_right = bd.number == 2
-            skip_one_turn = p.state[1] != "B"
-            last_mile = not skip_one_turn
-            if last_mile:
-                print("Last mile")
+            skip_one_turn = True
 
         # Ignore turns.
+        no_more_ignorations = len(p.ignorations) == 0
         if lf.handleTurn(p.ignoreNext(), to_right):
             print("Popped...")
             p.popTurn()
+
+            if (no_more_ignorations or p.state[1] == "B") and skip_one_turn:
+                print("Last mile for real")
+                skip_one_turn = False
+                last_mile = True
+
         elif skip_one_turn and lf.isTurn() is not None:
             print("Last mile for real")
             skip_one_turn = False

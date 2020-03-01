@@ -94,7 +94,26 @@ class LineFollower:
             # Switch edges if necessary.
             if to_right:
                 print("Switching edges")
-                self.left = True
+                self.left = False
+
+                # Reset PID.
+                self.pid = PID(self.Kp, self.Ki, self.Kd,
+                               setpoint=self.target_value)
+                self.pid.output_limits = (-1000, 1000)
+
+                # Go slightly forward.
+                print("Going forward")
+                self.lm.run_angle(360, 60, Stop.COAST, False)
+                self.rm.run_angle(360, 60)
+
+                # Turn left.
+                print("Turning left")
+                self.lm.run_angle(360, -100, Stop.COAST, False)
+                self.rm.run_angle(360, 100)
+
+                print("Completing turn")
+                self.completeTurn()
+                return True
 
             print("Helping turn")
             a = 100
@@ -119,7 +138,7 @@ class LineFollower:
         return True
 
     def completeTurn(self):
-        time_to_complete = time() + 2
+        time_to_complete = time() + 4
         while time() < time_to_complete:
             self.step()
         print("completed")
