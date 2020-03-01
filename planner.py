@@ -11,11 +11,15 @@ class Planner:
     """
 
     def __init__(self, start):
-        self.start_time = 0
+        self.start_time = time()
+        self.total_time = 0
         self.plan(start)
 
     def plan(self, target):
-        print("**Plan:", target, "previous:", time() - self.start_time)
+        prev_time = time() - self.start_time
+        self.total_time += prev_time
+        print("**Plan:", target, "previous:",
+              prev_time, "total:", self.total_time)
         self.state = target
         self.start_time = time()
         if self.state == "SL":
