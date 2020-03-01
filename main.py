@@ -4,6 +4,7 @@ from dependencies import *
 from line_follower import LineFollower
 from brick_detector import BrickDetector
 from planner import Planner
+from depo_navigator import DepoNavigator
 
 if __name__ == "__main__":
     print("Initializing")
@@ -11,6 +12,7 @@ if __name__ == "__main__":
     lf = LineFollower()
     bd = BrickDetector()
     p = Planner("BD")
+    dn = DepoNavigator()
     last_mile = False
     skip_one_turn = False
 
@@ -36,6 +38,7 @@ if __name__ == "__main__":
         # Depo arrival.
         if p.state[1] == "D" and len(p.ignorations) == 0:
             print("Depo")
+            dn.start()
             break
 
         # Detect bricks.
