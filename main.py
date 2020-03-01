@@ -49,11 +49,12 @@ if __name__ == "__main__":
                 print("Plan duration", time() - p.start_time)
                 p.plan(p.state[1] + bd.result)
 
-                # Turn around.
-                lf.turn(1 if p.left else - 1, 250)
+                if not dn.visited:
+                    # Turn around.
+                    lf.turn(1 if p.left else - 1, 250)
 
-                # Set side.
-                lf.left = p.left
+                    # Set side.
+                    lf.left = p.left
 
         # Last mile detection.
         elif p.state[1] in ["O", "Y", "B"] and len(p.ignorations) == 1 and not skip_one_turn:
