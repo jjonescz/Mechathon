@@ -41,7 +41,7 @@ if __name__ == "__main__":
             dn.start()
             while True:
                 dn.search()
-                if bd.brickAhead():
+                if bd.brickAhead(True):
                     break
             dn.exit()
 

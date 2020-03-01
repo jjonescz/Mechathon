@@ -31,12 +31,12 @@ class BrickDetector:
         self.lm.run_angle(90, target - self.lm.angle(), Stop.COAST, False)
         self.rm.run_angle(90, -target - self.rm.angle())
 
-    def brickAhead(self):
+    def brickAhead(self, force=False):
         """
         Returns True if any brick was detected.
         """
         # closer than 15 cm means brick ahead
-        if self.us.distance() < 50:
+        if force or self.us.distance() < 50:
             print("Brick detected")
             self.lm.reset_angle(0)
             self.rm.reset_angle(0)
