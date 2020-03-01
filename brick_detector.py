@@ -69,7 +69,7 @@ class BrickDetector:
         sleep(1)
         (r, g, b) = self.color.rgb()
 
-        if r == 0 or b/r > 3:
+        if r == 0 or b/r > 2:
             offset = 0  # blue
             self.result = "B"
         elif g == 0 or r/g > 3:
