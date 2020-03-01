@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("BR")
+    p = Planner("BD")
     last_mile = False
     skip_one_turn = False
 
@@ -32,6 +32,11 @@ if __name__ == "__main__":
 
         # Follow line edge.
         lf.step()
+
+        # Depo arrival.
+        if p.state[1] == "D" and len(p.ignorations) == 0:
+            print("Depo")
+            break
 
         # Detect bricks.
         to_right = False
