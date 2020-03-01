@@ -11,14 +11,12 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("DY")
+    p = Planner("SL")
     dn = DepoNavigator()
-    last_mile = True
+    last_mile = False
     skip_one_turn = False
 
     lf.left = p.left
-    # for i in range(1, 100):
-    #     lf.step()
 
     print("Started")
 
