@@ -10,8 +10,8 @@ if __name__ == "__main__":
 
     lf = LineFollower()
     bd = BrickDetector()
-    p = Planner("LO")
-    last_mile = True
+    p = Planner("SL")
+    last_mile = False
     skip_one_turn = False
 
     lf.left = p.left
@@ -78,7 +78,7 @@ if __name__ == "__main__":
                 lf.turn(1, 250)
 
             # Turn around and go on.
-            p.plan(p.state[1] + "L")  # TODO: Or R/D
+            p.plan(p.state[1] + bd.nextTruck())
             lf.left = p.left
             last_mile = False
             skip_one_turn = False

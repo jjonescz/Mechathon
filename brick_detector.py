@@ -126,3 +126,11 @@ class BrickDetector:
 
         # Reset claws.
         self.claws(0)
+
+    def nextTruck(self):
+        c = sum(self.collected)
+        if c <= 2:
+            return "L"
+        if c <= 4:
+            return "R"
+        return "D"
