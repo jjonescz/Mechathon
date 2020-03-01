@@ -18,7 +18,7 @@ class BrickDetector:
         self.number = 1
 
         # bricks to collect [B,B,R,R,Y,Y]
-        self.collected = [True, True] + [False] * 4
+        self.collected = [False] * 6
 
     def claws(self, target):
         self.motor.run_angle(720, target - self.motor.angle())

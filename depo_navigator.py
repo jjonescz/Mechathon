@@ -8,13 +8,13 @@ class DepoNavigator:
         self.rm = rm
         self.side = -1
         self.offset = 2
-        self.c = 0
         self.k = 70
 
     def start(self):
         self.lm.run_angle(180, -50, Stop.COAST, False)
         self.rm.run_angle(180, -25)
         self.offset = 2
+        self.c = 0 if self.side == -1 else self.k + 70
 
     def search(self):
         self.go(self.offset * self.side)
@@ -44,17 +44,16 @@ class DepoNavigator:
         self.rm.run_angle(180, s * 170)
 
         # Go towards brick.
-        self.lm.run_angle(180, 10, Stop.COAST, False)
-        self.rm.run_angle(180, 10)
+        self.lm.run_angle(180, 11, Stop.COAST, False)
+        self.rm.run_angle(180, 11)
 
     def exit(self):
         # Go back to line.
-        self.lm.run_angle(180, -200, Stop.COAST, False)
-        self.rm.run_angle(180, -200)
+        self.lm.run_angle(180, -210, Stop.COAST, False)
+        self.rm.run_angle(180, -210)
 
         # Turn left.
         self.lm.run_angle(180, -170, Stop.COAST, False)
         self.rm.run_angle(180, 170)
 
         self.side = 1
-        self.c = self.k
