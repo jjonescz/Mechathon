@@ -31,19 +31,19 @@ class BrickDetector:
         self.lm.run_angle(90, target - self.lm.angle(), Stop.COAST, False)
         self.rm.run_angle(90, -target - self.rm.angle())
 
-    def brickAhead(self, force=False):
+    def brickAhead(self, depo):
         """
         Returns True if any brick was detected.
         """
         # closer than 15 cm means brick ahead
-        if force or self.us.distance() < 50:
+        if depo or self.us.distance() < 50:
             print("Brick detected")
             self.lm.reset_angle(0)
             self.rm.reset_angle(0)
             self.claws(1980)
             self.go(self.dist_to_brick - 20)
             if self.shouldPickUpBrick():
-                self.loadBrick()
+                self.loadBrick(depo)
                 return True
             else:
                 self.ignoreBrick()
@@ -51,9 +51,11 @@ class BrickDetector:
 
         return False
 
-    def loadBrick(self):
-        self.go(0)
-        self.claws(500)
+    def loadBrick(self, depo):
+        # Depo is narrow.
+        if depo:
+            self.go(0)
+            self.claws(500)
         self.go(self.dist_to_brick)
         self.claws(0)
         self.go(0)

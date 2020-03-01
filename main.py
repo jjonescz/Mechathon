@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
         # Detect bricks.
         elif p.state[1] in ["L", "R"]:
-            if bd.brickAhead():
+            if bd.brickAhead(False):
                 # Plan destination.
                 p.plan(p.state[1] + bd.result)
 
