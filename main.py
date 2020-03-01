@@ -73,7 +73,7 @@ if __name__ == "__main__":
             print("Putting brick down")
             if bd.number == 1:
                 bd.putDownBrick1()
-                lf.turn(-1, 320)
+                lf.turn(-1, 350)
             else:
                 bd.putDownBrick2()
                 lf.turn(1, 250)
